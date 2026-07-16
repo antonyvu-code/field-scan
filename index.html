@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FIELD SCAN — a daily intelligence briefing</title>
+  <meta name="description" content="A creative frontend engineer's daily research ritual, rendered as a playable radar console. Sweep for signal." />
+
+  <meta property="og:title" content="FIELD SCAN — a daily intelligence briefing" />
+  <meta property="og:description" content="A creative frontend engineer's daily research ritual, rendered as a playable radar console. Sweep for signal." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0a0b0a" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <span class="topbar__mark">FIELD SCAN</span>
+    <div class="topbar__right">
+      <button class="topbar__btn" id="sound-toggle" aria-pressed="false">
+        <span class="topbar__dot" aria-hidden="true"></span>SOUND
+      </button>
+      <button class="topbar__btn" id="inspect-toggle" aria-pressed="false">
+        <span class="topbar__dot" aria-hidden="true"></span>INSPECT
+      </button>
+      <span class="topbar__clock" id="clock" aria-hidden="true">06:00:00</span>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-label="Interactive signal scanner">
+      <canvas id="scan-canvas" aria-hidden="true"></canvas>
+
+      <div class="hero__content">
+        <p class="hero__eyebrow"><!--day-->TRANSMISSION LOG · DAY 007<!--/day--></p>
+        <h1 class="hero__title">A creative<br />frontend engineer's<br /><span class="hero__title-accent">daily briefing.</span></h1>
+        <p class="hero__hint" id="hero-hint">move the cursor to sweep for signal</p>
+
+        <div class="hud">
+          <p class="hud__readout" id="hud-readout">STANDBY — no signal locked</p>
+          <div class="hud__strength" aria-hidden="true">
+            <span class="hud__strength-label">STR</span>
+            <span class="hud__strength-track"><span class="hud__strength-fill" id="strength-fill"></span></span>
+            <span class="hud__strength-val" id="strength-val">00%</span>
+          </div>
+        </div>
+        <!-- Live region announces locks only while the user is actively sweeping,
+             so the idle auto-sweep never spams a screen reader. -->
+        <p class="visually-hidden" id="hud-sr" aria-live="polite"></p>
+
+        <p class="annotation" data-inspect>
+          canvas 2D, not WebGL — a radar sweep over ~7 blips is O(n); WebGL here would be
+          over-engineering. Knowing when <em>not</em> to reach for the GPU is the signal.
+        </p>
+      </div>
+
+      <button class="hero__scroll-cue" id="scroll-cue" aria-label="Scroll to read the log">
+        <span></span>
+      </button>
+    </section>
+
+    <section class="signals" aria-label="Signals detected today">
+      <h2 class="visually-hidden">Signals detected today</h2>
+      <!--signals-->
+      <ul class="signals__list">
+        <li><a href="https://gsap.com/blog/3-15/" target="_blank" rel="noopener">GSAP 3.15 — easeReverse gives the way back its own feel</a></li>
+        <li><a href="https://developer.chrome.com/blog/scroll-triggered-animations" target="_blank" rel="noopener">Chrome 145 — scroll-triggered animation lands in pure CSS</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll-driven_animations" target="_blank" rel="noopener">MDN — the scroll-driven animations guide, now near-universal</a></li>
+        <li><a href="https://www.awwwards.com/sites/coffeetech-r" target="_blank" rel="noopener">CoffeeTech® — an industrial roaster sold like couture, SOTD 7.18</a></li>
+        <li><a href="https://www.awwwards.com/sites/brunello-cucinelli-ai-e-com" target="_blank" rel="noopener">Brunello Cucinelli — a pageless storefront assembled live by AI</a></li>
+        <li><a href="https://www.makemepulse.com/case-study/brunello-cucinelli-ai-shopping-experience" target="_blank" rel="noopener">makemepulse — how the Cucinelli intent engine was built</a></li>
+        <li><a href="https://www.anthropic.com/news/canadian-ai-research" target="_blank" rel="noopener">Anthropic — $10M into Canadian AI research, no strings on direction</a></li>
+      </ul>
+      <!--/signals-->
+      <p class="annotation annotation--center" data-inspect>
+        this list is the accessible fallback for the whole scanner — keyboard and screen-reader
+        users get every signal without a single pointer event.
+      </p>
+    </section>
+
+    <article class="log">
+      <section class="log-entry" data-time="06:00">
+        <span class="log-entry__time">06:00</span>
+        <h2>WAKE</h2>
+        <p>Before email, before coffee finishes brewing — the scan begins. Not because a client asked for it. Because staying current is the job, not a task inside it.</p>
+      </section>
+
+      <section class="log-entry" data-time="07:02">
+        <span class="log-entry__time">07:02</span>
+        <h2>SCAN INITIATED</h2>
+        <p>Awwwards, Codrops, GitHub release notes, three or four newsletters nobody else reads. Most days: noise. Some days: a technique worth stealing, a shipped CSS feature worth testing, a studio doing something nobody else is doing yet.</p>
+      </section>
+
+      <section class="log-entry" data-time="07:41">
+        <span class="log-entry__time">07:41</span>
+        <h2>SIGNAL, NOT NOISE</h2>
+        <p>The filter is the skill. Anyone can collect links. The work is deciding which five matter, and writing down — precisely — what to steal from each one.</p>
+        <p class="annotation" data-inspect>
+          reveal runs on ScrollTrigger with <code>once:true</code> so it never re-fires;
+          under <code>prefers-reduced-motion</code> the 0.9s tween collapses to 0.01s.
+        </p>
+      </section>
+
+      <section class="log-entry" data-time="08:00">
+        <span class="log-entry__time">08:00</span>
+        <h2>BRIEFING COMPILED</h2>
+        <p>This page is built from one real day of that ritual — 2026-07-14. The signals above are real, the links are real, and tomorrow there will be a new log. That's the actual practice behind every project in this portfolio.</p>
+      </section>
+    </article>
+
+    <section class="cta">
+      <p class="cta__label">This page is a demo of the ritual. The real thing runs every morning.</p>
+      <div class="cta__actions">
+        <!--transmission--><a class="cta__link" href="../webdesign-digest/2026-07-16.md" target="_blank" rel="noopener">READ TODAY'S FULL TRANSMISSION →</a><!--/transmission-->
+        <a class="cta__link cta__link--ghost" href="/case-study.html">READ THE CASE STUDY →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>FIELD SCAN — a portfolio concept, built on <!--date-->2026-07-16<!--/date--></span>
+  </footer>
+
+  <!-- Live telemetry — visible only in inspect mode -->
+  <aside class="telemetry" id="telemetry" aria-hidden="true" hidden>
+    <span class="telemetry__row"><span class="telemetry__k">FPS</span><span class="telemetry__v" id="tm-fps">--</span></span>
+    <span class="telemetry__row"><span class="telemetry__k">STR</span><span class="telemetry__v" id="tm-str">0.00</span></span>
+    <span class="telemetry__row"><span class="telemetry__k">BLIPS</span><span class="telemetry__v" id="tm-blips">0</span></span>
+    <span class="telemetry__row"><span class="telemetry__k">LOCK</span><span class="telemetry__v" id="tm-lock">null</span></span>
+    <span class="telemetry__row"><span class="telemetry__k">DAYS</span><span class="telemetry__v" id="tm-days">0</span></span>
+  </aside>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

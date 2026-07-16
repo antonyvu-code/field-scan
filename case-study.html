@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FIELD SCAN — case study</title>
+  <meta name="description" content="The design and engineering decisions behind FIELD SCAN — why a radar console, why Canvas 2D, and how the numbers stay real." />
+  <meta name="theme-color" content="#0a0b0a" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body class="case-body">
+  <a class="skip-link" href="#case-main">Skip to content</a>
+
+  <header class="topbar topbar--solid">
+    <a class="topbar__mark topbar__mark--link" href="/">← FIELD SCAN</a>
+    <span class="topbar__clock" aria-hidden="true">CASE STUDY</span>
+  </header>
+
+  <main id="case-main" class="case">
+    <header class="case__hero">
+      <p class="case__eyebrow">DESIGN LOG · DECISIONS</p>
+      <h1 class="case__title">Why the portfolio is a <span class="case__title-accent">radar console.</span></h1>
+      <p class="case__lede">
+        FIELD SCAN turns a real morning habit — scanning the web for design and engineering
+        signal — into something you play instead of read. This is the reasoning behind it:
+        what problem it solves, why it looks the way it does, and how it keeps itself honest.
+      </p>
+      <a class="case__demo-link" href="/">▶ OPEN THE LIVE DEMO</a>
+    </header>
+
+    <section class="case__section">
+      <p class="case__num">01</p>
+      <div class="case__body">
+        <h2>The premise</h2>
+        <p>
+          Frontend portfolios fall into two traps: the <em>gallery</em> — a grid of thumbnails a
+          hiring manager skims in eight seconds — or the <em>tech-flex</em> — heavy WebGL that
+          impresses for a moment but says nothing about the person. FIELD SCAN avoids both by
+          making the page itself the evidence: it is simultaneously the story of how I work and a
+          working demo of how I build.
+        </p>
+        <p class="case__note">
+          Two audiences read it two ways: a hiring lead gets the story in 20 seconds without
+          playing; a senior engineer can toggle <strong>INSPECT</strong> and read the
+          architecture notes right on the page.
+        </p>
+      </div>
+    </section>
+
+    <section class="case__section">
+      <p class="case__num">02</p>
+      <div class="case__body">
+        <h2>A new dialect: SIGNAL</h2>
+        <p>
+          The visual language is a deliberate system, not decoration. Absolute near-black
+          <code>#0A0B0A</code>, a single saturated phosphor green <code>#39FF8F</code> reserved
+          only for live state, a radar coordinate grid as the substrate, and one rule: the
+          content hides in the dark and only exists where you sweep light across it. Information
+          is everywhere; the value is in the act of actively looking — the page's whole argument,
+          made physical.
+        </p>
+        <p class="case__note">
+          Two type roles, no third: a serif display (Instrument Serif) for headings and log prose,
+          mono (Space Mono) for every label, number, and HUD readout — mono is the raw material of
+          the dialect, so it appears freely.
+        </p>
+      </div>
+    </section>
+
+    <section class="case__section">
+      <p class="case__num">03</p>
+      <div class="case__body">
+        <h2>Why Canvas 2D, not WebGL</h2>
+        <p>
+          A radar sweep over seven blips is O(n) with n = 7. Canvas 2D renders it comfortably at
+          60fps on any machine, is trivial to debug, and ships in a fraction of the bytes. Reaching
+          for WebGL here would be over-engineering — and knowing when <em>not</em> to reach for the
+          GPU is itself the senior signal. The state model is one <code>pointer</code> object plus a
+          single <code>lockedIndex</code>, and the DOM is written only when the locked signal
+          actually changes — never once per frame.
+        </p>
+        <p class="case__note">
+          Motion is delta-time based, so the sweep runs the same speed at 60fps or 144fps; a
+          <code>ResizeObserver</code> sizes the canvas the moment layout is ready and on every
+          resize, and <code>prefers-reduced-motion</code> stops the idle auto-sweep entirely.
+        </p>
+      </div>
+    </section>
+
+    <section class="case__section">
+      <p class="case__num">04</p>
+      <div class="case__body">
+        <h2>The numbers are real</h2>
+        <p>
+          Every figure on the page is measured, not invented. The clock is real local time. Signal
+          strength is <code>1 − clamp(distance / radius)</code>, computed live from the cursor. The
+          FPS meter reads true delta time. The DAY count and the signals themselves come from an
+          actual daily digest: a build step parses today's markdown, verifies that every link on
+          the page really appears in it — failing the build if one doesn't — and regenerates the
+          accessible list, the DAY label, and the date from that single source.
+        </p>
+        <p class="case__note">
+          That validation is the point: the page claims the links are real, and the toolchain
+          proves it on every build rather than trusting the author.
+        </p>
+      </div>
+    </section>
+
+    <section class="case__section">
+      <p class="case__num">05</p>
+      <div class="case__body">
+        <h2>Accessibility on a non-standard interface</h2>
+        <p>
+          A canvas game is invisible to a screen reader, so the scanner has an equivalent reading.
+          The signals sit in a real <code>&lt;ul&gt;</code> of links that works with zero pointer
+          events; the HUD is an <code>aria-live</code> region; there is a skip link, visible focus
+          rings, landmark structure, and contrast that keeps phosphor green for large labels and
+          numbers only — body text stays on the high-contrast ink color.
+        </p>
+      </div>
+    </section>
+
+    <section class="case__section">
+      <p class="case__num">06</p>
+      <div class="case__body">
+        <h2>What I'd build next</h2>
+        <p>
+          The pipeline is designed to grow: the digest parser can widen into a fully self-updating
+          feed, the lock blips already hint at a richer Web Audio layer, and a nightly job could
+          redeploy the page each morning so the portfolio is never more than a day stale — a
+          portfolio that literally keeps scanning.
+        </p>
+      </div>
+    </section>
+
+    <footer class="case__end">
+      <p class="case__end-line">The page is a demo of the ritual. The real thing runs every morning.</p>
+      <div class="cta__actions">
+        <a class="cta__link" href="/">▶ OPEN THE LIVE DEMO</a>
+        <a class="cta__link cta__link--ghost" href="../webdesign-digest/2026-07-14.md" target="_blank" rel="noopener">READ TODAY'S TRANSMISSION →</a>
+      </div>
+    </footer>
+  </main>
+
+  <footer class="site-footer">
+    <span>FIELD SCAN — a portfolio concept, built on 2026-07-14</span>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "field-scan",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "FIELD SCAN — portfolio concept: a creative frontend engineer's daily intelligence briefing, rendered as a playable radar console. Your cursor is the scan beam.",
+  "scripts": {
+    "signals": "node scripts/generate-signals.mjs",
+    "predev": "node scripts/generate-signals.mjs",
+    "dev": "vite --port 5624",
+    "prebuild": "node scripts/generate-signals.mjs",
+    "build": "vite build",
+    "preview": "vite preview --port 5624"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5"
+  }
+}
