@@ -1,45 +1,45 @@
 {
   "meta": {
-    "date": "2026-07-16",
-    "digestDays": 7,
-    "dayLabel": "DAY 007",
-    "rawFeedCount": 16,
+    "date": "2026-07-27",
+    "digestDays": 14,
+    "dayLabel": "DAY 014",
+    "rawFeedCount": 18,
     "matched": 7
   },
   "signals": [
     {
-      "label": "GSAP 3.15 — easeReverse gives the way back its own feel",
-      "url": "https://gsap.com/blog/3-15/",
+      "label": "Claude Opus 5 — frontier-class coding, at half the old price",
+      "url": "https://thenextweb.com/news/anthropic-claude-opus-5-launch-frontier-bench-coding",
       "priority": 1
     },
     {
-      "label": "Chrome 145 — scroll-triggered animation lands in pure CSS",
-      "url": "https://developer.chrome.com/blog/scroll-triggered-animations",
+      "label": "Spotify Wrapped Party — SOTD, and this year it is multiplayer",
+      "url": "https://www.awwwards.com/sites/spotify-wrapped-party",
       "priority": 1
     },
     {
-      "label": "MDN — the scroll-driven animations guide, now near-universal",
-      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll-driven_animations",
+      "label": "NORMAL IS BORING — real estate sold in black and white only",
+      "url": "https://www.awwwards.com/sites/normal-is-boring",
+      "priority": 1
+    },
+    {
+      "label": "Artem Shcherbakov — a VFX portfolio carried by word-level split text",
+      "url": "https://www.awwwards.com/sites/artem-shcherbakov",
+      "priority": 1
+    },
+    {
+      "label": "Claude Code — the browser now ships inside the tool",
+      "url": "https://code.claude.com/docs/en/whats-new",
       "priority": 2
     },
     {
-      "label": "CoffeeTech® — an industrial roaster sold like couture, SOTD 7.18",
-      "url": "https://www.awwwards.com/sites/coffeetech-r",
-      "priority": 1
-    },
-    {
-      "label": "Brunello Cucinelli — a pageless storefront assembled live by AI",
-      "url": "https://www.awwwards.com/sites/brunello-cucinelli-ai-e-com",
-      "priority": 1
-    },
-    {
-      "label": "makemepulse — how the Cucinelli intent engine was built",
-      "url": "https://www.makemepulse.com/case-study/brunello-cucinelli-ai-shopping-experience",
+      "label": "Active Theory — the technical case study behind Wrapped",
+      "url": "https://medium.com/active-theory/spotify-wrapped-2018-technical-case-study-5b7cfb7e9d3a",
       "priority": 2
     },
     {
-      "label": "Anthropic — $10M into Canadian AI research, no strings on direction",
-      "url": "https://www.anthropic.com/news/canadian-ai-research",
+      "label": "Scroll-driven animations — the 2026 guide, now that support is universal",
+      "url": "https://cssawwwards.com/blog/css-scroll-driven-animations-guide-2026",
       "priority": 2
     }
   ]
